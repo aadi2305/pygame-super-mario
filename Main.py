@@ -27,21 +27,23 @@ walking_sright = [sr_mario1, sr_mario2, sr_mario3]
 
 #all the funtions
 def mario_walking():
-	global points
+	global points, x_mario,y_mario
+	if isJump:
+		jump()
 	if right == False and left == False:
 		if temprf == False:
-			screen.blit(sr_mario1, (200, 425))
+			screen.blit(sr_mario1, (x_mario, y_mario))
 		if temprf == True:
-			screen.blit(sl_mario1, (200, 425))
+			screen.blit(sl_mario1, (x_mario, y_mario))
 	if right:
 		if add!= 0:
-			screen.blit(walking_sright[points/3], (200,425))
+			screen.blit(walking_sright[points/3], (x_mario,y_mario))
 			points +=1
 			if points >=  9:
 				points = 0
 	if left:
 		if add!= 0:
-			screen.blit(walking_sleft[points/3], (200,425))
+			screen.blit(walking_sleft[points/3], (x_mario,y_mario))
 			points +=1
 			if points >=  9:
 				points = 0
@@ -67,21 +69,38 @@ def bg_loop():
 	if x_bg1 >1280:
 		x_bg1 = -1280
 def jump():
-	pass
+	global x_mario, y_mario, jumpPoints, isJump, d
+	if isJump == True:
+		if jumpPoints >=0:
+			neg = 1
+		elif jumpPoints <0:
+			neg = -1
+		y_mario = y_mario - ((jumpPoints**2)*neg)
+		jumpPoints-=1
+		if jumpPoints < -jumpHeight:
+			jumpPoints = jumpHeight
+			isJump = False
+		
+		print(jumpPoints)
+
+	
 
 
 #all the variables
 x_bg1 = 0
 x_bg2 = 1280
+x_mario = 200
+y_mario = 425
 add = 0
 speed = 20
 running = True
 points = 0
-
+isJump = False
 right = False
 left = False
 temprf = 0
-
+jumpPoints = 8
+jumpHeight = jumpPoints
 #the game loop 
 while running:
 	for event in pygame.event.get():
@@ -98,12 +117,15 @@ while running:
 				right = True
 				left= False
 				temprf = False
+			if event.key == pygame.K_SPACE:
+				isJump = True
 
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
 				add = 0
 				right = False
 				left= False
+
 				
 	
 	
@@ -113,4 +135,4 @@ while running:
 
 
 	pygame.display.update()
-	clock.tick(60)
+	clock.tick(30)
