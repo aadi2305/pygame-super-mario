@@ -28,6 +28,13 @@ walking_sright = [sr_mario1, sr_mario2, sr_mario3]
 #all the funtions
 def mario_walking():
 	global points, x_mario,y_mario
+	if x_mario <= 960 and x_mario >= 180:
+		x_mario -= mario_add
+	if x_mario == 980:
+		x_mario = 960
+	if x_mario == 160:
+		x_mario = 180
+
 	if isJump:
 		jump()
 	if right == False and left == False:
@@ -36,13 +43,13 @@ def mario_walking():
 		if temprf == True:
 			screen.blit(sl_mario1, (x_mario, y_mario))
 	if right:
-		if add!= 0:
+		if  bg_add !=0 or mario_add!=0:
 			screen.blit(walking_sright[points/3], (x_mario,y_mario))
 			points +=1
 			if points >=  9:
 				points = 0
 	if left:
-		if add!= 0:
+		if bg_add !=0 or mario_add!=0:
 			screen.blit(walking_sleft[points/3], (x_mario,y_mario))
 			points +=1
 			if points >=  9:
@@ -53,13 +60,14 @@ def show():
 	screen.blit(bg1, (x_bg1, 0))
 	screen.blit(bg1, (x_bg2, 0))
 	mario_walking()
-	
+	pygame.display.update()
 
 def bg_loop():
 	global x_bg1
 	global x_bg2
-	x_bg1 = x_bg1 + add
-	x_bg2 = x_bg2 + add
+	if x_mario >= 960 or x_mario <= 180:
+		x_bg1 = x_bg1 + bg_add
+		x_bg2 = x_bg2 + bg_add
 	if x_bg1 <= -1280:
 		x_bg1 = 1280
 	if x_bg2 <=-1280:
@@ -80,18 +88,14 @@ def jump():
 		if jumpPoints < -jumpHeight:
 			jumpPoints = jumpHeight
 			isJump = False
-		
-		print(jumpPoints)
-
-	
-
 
 #all the variables
 x_bg1 = 0
 x_bg2 = 1280
 x_mario = 200
 y_mario = 425
-add = 0
+bg_add = 0
+mario_add = 0
 speed = 20
 running = True
 points = 0
@@ -101,6 +105,7 @@ left = False
 temprf = 0
 jumpPoints = 8
 jumpHeight = jumpPoints
+
 #the game loop 
 while running:
 	for event in pygame.event.get():
@@ -108,12 +113,14 @@ while running:
 			running =False
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_LEFT:
-				add = speed
+				mario_add = speed
+				bg_add = speed
 				right = False
 				left = True
 				temprf = True
 			if event.key == pygame.K_RIGHT:
-				add = -speed
+				mario_add = -speed
+				bg_add = -speed
 				right = True
 				left= False
 				temprf = False
@@ -122,17 +129,18 @@ while running:
 
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
-				add = 0
+				bg_add = 0
+				mario_add = 0
 				right = False
 				left= False
 
 				
 	
-	
+	print(x_mario)
 	bg_loop()
 	show()
 	
 
 
-	pygame.display.update()
+	
 	clock.tick(30)
