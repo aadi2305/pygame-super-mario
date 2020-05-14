@@ -4,58 +4,40 @@ import math
 pygame.init()
 
 
-screen = pygame.display.set_mode((1270,725))
+screen = pygame.display.set_mode((1280,720))
 pygame.display.set_caption("Super Mario")
 
-background = pygame.image.load("Images/BG.png")
+background1 = pygame.image.load("Images/BG1.png")
+background2 = background1
 pipe = pygame.image.load("Images/pipe.png")
 
-
-pipeX = 500
-pipeY = 0
-Y_change = 0
-X_change = 0
+x_bg1 = 0
+bg_change = 0
+x_bg2 = 1280
 #game Loop
 running = True
 while running:
-	screen.blit(background, (0,0))
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			running = False
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_UP:
-				Y_change = -2
-			if event.key == pygame.K_DOWN:
-				Y_change =   2
-			if event.key == pygame.K_LEFT:
-				X_change =  -2
 			if event.key == pygame.K_RIGHT:
-				X_change =   2
+				bg_change =   6
+			if event.key == pygame.K_LEFT:
+				bg_change =  -6
+			
 
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-				
-					X_change =  0
-			if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-				
-					Y_change =  0
-
-
-				
-
-	print(pipeX, pipeY)
-	pipeX += X_change
-	pipeY += Y_change
-	screen.blit(pipe,(pipeX, pipeY))
-		
-
-
-
+				bg_change =  0
+			
 	
+	x_bg1 += -2
+	x_bg2 = x_bg2 + 1280
+	screen.blit(background1, (x_bg1,0))
+	screen.blit(background2, (x_bg2,0))
+	#screen.blit(pipe, (500,0))
+	if x_bg1 == -1280:
+		x_bh1 = 1280
 
-
-
-
-	
-	
 	pygame.display.update()
