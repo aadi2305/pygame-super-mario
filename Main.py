@@ -1,43 +1,43 @@
 import pygame
-import random
-import math
+
 pygame.init()
-
-
-screen = pygame.display.set_mode((1280,720))
-pygame.display.set_caption("Super Mario")
-
-background1 = pygame.image.load("Images/BG1.png")
-background2 = background1
-pipe = pygame.image.load("Images/pipe.png")
-
+screen = pygame.display.set_mode((1280, 720))
+bg1 = pygame.image.load("Images/BG1.png")
+bg2 = bg1
+mario = pygame.image.load("Images/Mario1.png")
 x_bg1 = 0
-bg_change = 0
 x_bg2 = 1280
-#game Loop
-running = True
+add = 0
+speed = 20
+running = True 
 while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
-			running = False
+			running =False
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_RIGHT:
-				bg_change =   6
 			if event.key == pygame.K_LEFT:
-				bg_change =  -6
-			
-
+				add = speed
+			if event.key == pygame.K_RIGHT:
+				add = -speed
 		if event.type == pygame.KEYUP:
-			if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-				bg_change =  0
-			
+			if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
+				add = 0
+				
+	x_bg1 = x_bg1 + add
+	x_bg2 = x_bg2 + add
+	if x_bg1 <= -1280:
+		x_bg1 = 1280
+	if x_bg2 <=-1280:
+		x_bg2 = 1280
+	if x_bg2 >1280:
+		x_bg2 = -1280
+	if x_bg1 >1280:
+		x_bg1 = -1280
 	
-	x_bg1 += -2
-	x_bg2 = x_bg2 + 1280
-	screen.blit(background1, (x_bg1,0))
-	screen.blit(background2, (x_bg2,0))
-	#screen.blit(pipe, (500,0))
-	if x_bg1 == -1280:
-		x_bh1 = 1280
+
+	screen.blit(bg1, (x_bg1,0))
+	screen.blit(bg2, (x_bg2,0))
+	screen.blit(mario, (200,400))
+
 
 	pygame.display.update()
