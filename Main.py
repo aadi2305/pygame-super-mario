@@ -14,28 +14,35 @@ pygame.display.set_icon(icon)
 #loading all the images
 bg1 = pygame.image.load("Images/BG1.png")
 bg2 = bg1
-mario1 = pygame.image.load("Images/Mario1.png")
-mario2 = pygame.image.load("Images/Mario2.png")
-mario3 = pygame.image.load("Images/Mario2.png")
-walking_list = [mario1, mario2, mario3]
+sl_mario1 = pygame.image.load("Images/small_mario/flipsmallmario1.png")
+sl_mario2 = pygame.image.load("Images/small_mario/flipsmallmario2.png")
+sl_mario3 = pygame.image.load("Images/small_mario/flipsmallmario3.png")
+walking_sleft = [sl_mario1, sl_mario2, sl_mario3]
 
-#all the fuctions and classes
-def walking_mario():
-	screen.blit(mario1, (200,400))
-	screen.blit(mario2, (200,400))
-	screen.blit(mario2, (200,400))
+sr_mario1 = pygame.image.load("Images/small_mario/smallmario1.png")
+sr_mario2 = pygame.image.load("Images/small_mario/smallmario2.png")
+sr_mario3 = pygame.image.load("Images/small_mario/smallmario3.png")
+walking_sright = [sr_mario1, sr_mario2, sr_mario3]
 
 def show():
 	global points
 	screen.blit(bg1, (x_bg1, 0))
 	screen.blit(bg1, (x_bg2, 0))
-	if add == 0:
-		screen.blit(mario1, (200, 400))
-	if add!= 0:
-		screen.blit(walking_list[points/3], (200,400))
-		points +=1
-		if points >=  9:
-			points = 0
+	if right == False and left == False:
+		screen.blit(sr_mario1, (200, 425))
+	if right:
+		if add!= 0:
+			screen.blit(walking_sright[points/3], (200,425))
+			points +=1
+			if points >=  9:
+				points = 0
+	if left:
+		if add!= 0:
+			screen.blit(walking_sleft[points/3], (200,425))
+			points +=1
+			if points >=  9:
+				points = 0
+
 def bg_loop():
 	global x_bg1
 	global x_bg2
@@ -59,6 +66,8 @@ add = 0
 speed = 20
 running = True
 points = 0
+right = False
+left = False
 
 #the game loop 
 while running:
@@ -68,11 +77,19 @@ while running:
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_LEFT:
 				add = speed
+				right = False
+				left = True
 			if event.key == pygame.K_RIGHT:
 				add = -speed
+				right = True
+				left= False
+				
+
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
 				add = 0
+				right = False
+				left= False
 				
 	
 	
