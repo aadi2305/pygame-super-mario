@@ -20,9 +20,10 @@ sl_mario2 = pygame.image.load("Images/small_mario/flipsmallmario2.png")
 sl_mario3 = pygame.image.load("Images/small_mario/flipsmallmario3.png")
 walking_sleft = [sl_mario1, sl_mario2, sl_mario3]
 
-sr_mario1 = pygame.image.load("Images/small_mario/smallmario1.png")
-sr_mario2 = pygame.image.load("Images/small_mario/smallmario2.png")
-sr_mario3 = pygame.image.load("Images/small_mario/smallmario3.png")
+sr_mario1 = pygame.image.load("Images/New Marios/smallmario1.png")
+sr_mario2 = pygame.image.load("Images/New Marios/smallmario2.png")
+sr_mario3 = pygame.image.load("Images/New Marios/smallmario3.png")
+sr_jump = pygame.image.load("Images/New Marios/smalljump.png")
 walking_sright = [sr_mario1, sr_mario2, sr_mario3]
 
 #all the funtions
@@ -37,23 +38,25 @@ def mario_walking():
 
 	if isJump:
 		jump()
-	if right == False and left == False:
-		if temprf == False:
-			screen.blit(sr_mario1, (x_mario, y_mario))
-		if temprf == True:
-			screen.blit(sl_mario1, (x_mario, y_mario))
-	if right:
-		if  bg_add !=0 or mario_add!=0:
-			screen.blit(walking_sright[points/3], (x_mario,y_mario))
-			points +=1
-			if points >=  9:
-				points = 0
-	if left:
-		if bg_add !=0 or mario_add!=0:
-			screen.blit(walking_sleft[points/3], (x_mario,y_mario))
-			points +=1
-			if points >=  9:
-				points = 0
+		screen.blit(sr_jump, (x_mario,y_mario))
+	if isJump == False:
+		if right == False and left == False:
+			if temprf == False:
+				screen.blit(sr_mario1, (x_mario, y_mario))
+			if temprf == True:
+				screen.blit(sl_mario1, (x_mario, y_mario))
+		if right:
+			if  bg_add !=0 or mario_add!=0:
+				screen.blit(walking_sright[points/3], (x_mario,y_mario))
+				points +=1
+				if points >=  9:
+					points = 0
+		if left:
+			if bg_add !=0 or mario_add!=0:
+				screen.blit(walking_sleft[points/3], (x_mario,y_mario))
+				points +=1
+				if points >=  9:
+					points = 0
 
 def show():
 	
@@ -146,4 +149,4 @@ while running:
 
 
 	
-	clock.tick(30)
+	clock.tick(25)
