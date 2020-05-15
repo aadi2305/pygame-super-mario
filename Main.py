@@ -29,7 +29,7 @@ sr_mario4 = pygame.image.load("Images/New Marios/smallmario4.png")
 sr_jump = pygame.image.load("Images/New Marios/smalljump.png")
 walking_sright = [sr_mario1, sr_mario2, sr_mario3, sr_mario4]
 
-star_box = pygame.image.load("Imgaes/star box.png")
+star_box = pygame.image.load("Images/Star box.png")
 
 #all the funtions
 def mario_walking():
@@ -77,12 +77,19 @@ def show():
 	screen.blit(bg1, (x_bg2, 0))
 	screen.blit(bg1, (x_bg3, 0))
 	mario_walking()
+	blitByXpos(starbox1.pngImage, starbox1.x_pos, starbox1.y_pos)
+	#screen.blit(starbox1.pngImage, (starbox1.x_pos, starbox1.y_pos))
 	pygame.display.update()
-
+def blitByXpos(img, xPos, yPos):
+	if xPos<1300:
+		screen.blit(img,(xPos, yPos))
+	else:
+		pass
 def bg_loop():
 	global x_bg1
 	global x_bg2 , x_bg3
 	if x_mario >= 960 or x_mario <= 180:
+		starbox1.x_pos += bg_add
 		x_bg1 = x_bg1 + bg_add
 		x_bg2 = x_bg2 + bg_add
 		x_bg3 = x_bg3 + bg_add
@@ -111,6 +118,16 @@ def jump():
 		if jumpPoints < -jumpHeight:
 			jumpPoints = jumpHeight
 			isJump = False
+class Elements():
+	def __init__(self, x_pos, y_pos, pngImage):
+		self.x_pos = x_pos
+		self.y_pos = y_pos
+		self.pngImage = pngImage
+	def x_movement(self):
+		if x_mario >= 960 or x_mario <= 180:
+			pass
+			
+		
 
 #all the variables
 x_bg1 = 0
@@ -130,6 +147,8 @@ temprf = 0
 jumpPoints = 8
 jumpHeight = jumpPoints
 
+#all the elements
+starbox1 = Elements(1280+135, 280, star_box)
 #the game loop 
 while running:
 	for event in pygame.event.get():
@@ -157,9 +176,11 @@ while running:
 				mario_add = 0
 				right = False
 				left= False
+	
 	bg_loop()
 	show()
-	
+
+	print(starbox1.x_pos)
 
 
 	
