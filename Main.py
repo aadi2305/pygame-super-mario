@@ -70,7 +70,7 @@ def mario_walking():
 					points = 0
 
 def show():
-	screen.fill((77,195,255))
+	#screen.fill((77,195,255))
 	screen.blit(bg1, (x_bg1, 0))
 	screen.blit(bg1, (x_bg2, 0))
 	screen.blit(bg1, (x_bg3, 0))
@@ -84,16 +84,17 @@ def bg_loop():
 		x_bg1 = x_bg1 + bg_add
 		x_bg2 = x_bg2 + bg_add
 		x_bg3 = x_bg3 + bg_add
-	if x_bg1 < -1280:
+	if x_bg1 <= -1280:
 		x_bg1 = 1280*2
-	if x_bg2 <-1280:
+	if x_bg2 <=-1280:
 		x_bg2 = 1280*2
-	if x_bg3 <-1280:
+	if x_bg3 <=-1280:
 		x_bg3 = 1280*2
-	if x_bg2 >1280*2:
-		x_bg2 = -1280
+
 	if x_bg1 >1280*2:
 		x_bg1 = -1280
+	if x_bg2 >1280*2:
+		x_bg2 = -1280
 	if x_bg3 >1280*2:
 		x_bg3 = -1280
 def jump():
