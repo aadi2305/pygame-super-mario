@@ -29,6 +29,8 @@ sr_mario4 = pygame.image.load("Images/New Marios/smallmario4.png")
 sr_jump = pygame.image.load("Images/New Marios/smalljump.png")
 walking_sright = [sr_mario1, sr_mario2, sr_mario3, sr_mario4]
 
+star_box = pygame.image.load("Imgaes/star box.png")
+
 #all the funtions
 def mario_walking():
 	global points, x_mario,y_mario
