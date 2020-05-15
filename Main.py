@@ -179,7 +179,6 @@ while running:
 				temprf = False
 			if event.key == pygame.K_UP:
 				isJump = True
-				jumpPoints = jumpHeight
 
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
