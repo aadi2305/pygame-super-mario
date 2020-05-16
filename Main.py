@@ -150,9 +150,6 @@ def collision(xPos, yPos, img):
 			y_mario = yPos+height
 			x_mario= xPos - mario_width
 	
-def falling(xPos, yPos, width):
-	global isJump
-	
 
 class Elements():
 	def __init__(self, x_pos, y_pos, pngImage):
@@ -178,7 +175,7 @@ isJump = False
 right = False
 left = False
 temprf = 0
-jumpPoints = 15
+jumpPoints = 12
 jumpHeight = jumpPoints
 mario_width, mario_height = sr_mario1.get_rect().size
 
