@@ -39,11 +39,14 @@ def jump():
 			neg = 1
 		elif jumpPoints <0:
 			neg = -1
-		y_mario = y_mario - ((jumpPoints**2)*neg)
+		y_mario = y_mario - ((jumpPoints**2)*0.25*neg)
+		if y_mario > 425:
+			y_mario = 425
 		jumpPoints-=1
 		if jumpPoints < -jumpHeight:
 			jumpPoints = jumpHeight
 			isJump = False
+			y_mario = 425
 
 def mario_walking():
 	global points, x_mario,y_mario
@@ -53,8 +56,7 @@ def mario_walking():
 		x_mario = 960
 	if x_mario == 160:
 		x_mario = 180
-
-	if isJump:
+	if isJump == True:
 		jump()
 		if right == False and left == False:
 			if temprf == False:
@@ -121,11 +123,36 @@ def show():
 	blitByXpos(starbox1.pngImage, starbox1.x_pos, starbox1.y_pos)
 	pygame.display.update()
 
-"""def collision(xPos, yPos, img):
+def collision(xPos, yPos, img):
+	global isJump
 	global x_mario,y_mario
+	print(isJump, y_mario+mario_height, yPos)
+	
 	width,height = img.get_rect().size
-	if y_mario < yPos or y_mario <yPos+height:
-		y_mario = y_mario + 1"""
+	if x_mario >= xPos and x_mario <= xPos +width:
+		if y_mario + mario_height <= yPos+height:
+			y_mario = yPos- mario_height
+			isJump = False
+		elif y_mario <= yPos+height and y_mario>= yPos:
+			y_mario = yPos+height
+			x_mario = xPos
+
+	if x_mario + mario_width >= xPos and x_mario+ mario_width <= xPos +width:
+		if y_mario + mario_height <= yPos:
+			y_mario = yPos- mario_height
+			isJump = False
+
+		elif y_mario <= yPos + height and y_mario>= yPos:
+			y_mario = yPos+height
+			x_mario= xPos - mario_width
+		falling(xPos,yPos,width)
+
+def falling(xPos, yPos, width):
+	global isJump
+	if y_mario + mario_height ==yPos:
+		if x_mario < xPos and x_mario+ mario_width > xPos +width:
+			isJump = True
+
 class Elements():
 	def __init__(self, x_pos, y_pos, pngImage):
 		self.x_pos = x_pos
@@ -134,8 +161,6 @@ class Elements():
 	def x_movement(self):
 		if x_mario >= 960 or x_mario <= 180:
 			pass
-			
-		
 
 #all the variables
 x_bg1 = 0
@@ -152,7 +177,7 @@ isJump = False
 right = False
 left = False
 temprf = 0
-jumpPoints = 8
+jumpPoints = 16
 jumpHeight = jumpPoints
 mario_width, mario_height = sr_mario1.get_rect().size
 
@@ -186,7 +211,7 @@ while running:
 				mario_add = 0
 				right = False
 				left= False
-	#collision(starbox1.x_pos, starbox1.y_pos, star_box)
+	collision(starbox1.x_pos, starbox1.y_pos, star_box)
 	bg_loop()
 	show()
 
