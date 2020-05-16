@@ -126,9 +126,13 @@ def show():
 def collision(xPos, yPos, img):
 	global isJump
 	global x_mario,y_mario
-	print(isJump, y_mario+mario_height, yPos)
+	print(isJump, x_mario, xPos)
 	
+
 	width,height = img.get_rect().size
+	if y_mario + mario_height <=yPos:
+		if x_mario < xPos or x_mario+ mario_width > xPos +width:
+			isJump = True
 	if x_mario >= xPos and x_mario <= xPos +width:
 		if y_mario + mario_height <= yPos+height:
 			y_mario = yPos- mario_height
@@ -145,13 +149,10 @@ def collision(xPos, yPos, img):
 		elif y_mario <= yPos + height and y_mario>= yPos:
 			y_mario = yPos+height
 			x_mario= xPos - mario_width
-		falling(xPos,yPos,width)
-
+	
 def falling(xPos, yPos, width):
 	global isJump
-	if y_mario + mario_height ==yPos:
-		if x_mario < xPos and x_mario+ mario_width > xPos +width:
-			isJump = True
+	
 
 class Elements():
 	def __init__(self, x_pos, y_pos, pngImage):
@@ -177,7 +178,7 @@ isJump = False
 right = False
 left = False
 temprf = 0
-jumpPoints = 16
+jumpPoints = 15
 jumpHeight = jumpPoints
 mario_width, mario_height = sr_mario1.get_rect().size
 
