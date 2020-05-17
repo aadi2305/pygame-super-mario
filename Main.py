@@ -241,7 +241,6 @@ while running:
 	collision(starbox2.x_pos, starbox2.y_pos, star_box2)
 	bg_loop()
 	show()
-	print(starbox2.x_pos)
 
 
 
