@@ -145,28 +145,28 @@ def show():
 def collision(xPos, yPos, img):
 	global isJump
 	global x_mario,y_mario
+
 	width,height = img.get_rect().size
+	if x_mario + mario_width >= xPos - 70 and x_mario<= xPos+ width + 70:
+		if y_mario + mario_height <=yPos:
+			if x_mario < xPos or x_mario+ mario_width > xPos +width:
+				isJump = True
+		if x_mario >= xPos and x_mario <= xPos +width:
+			if y_mario + mario_height <= yPos+height:
+				y_mario = yPos- mario_height
+				isJump = False
+			elif y_mario <= yPos+height and y_mario>= yPos:
+				y_mario = yPos+height
+				x_mario = xPos
 
-	if y_mario + mario_height <=yPos:
-		if x_mario < xPos or x_mario+ mario_width > xPos +width:
-			isJump = True
-	if x_mario >= xPos and x_mario <= xPos +width:
-		if y_mario + mario_height <= yPos+height:
-			y_mario = yPos- mario_height
-			isJump = False
-		elif y_mario <= yPos+height and y_mario>= yPos:
-			y_mario = yPos+height
-			x_mario = xPos
+		if x_mario + mario_width >= xPos and x_mario+ mario_width <= xPos +width:
+			if y_mario + mario_height <= yPos:
+				y_mario = yPos- mario_height
+				isJump = False
 
-	if x_mario + mario_width >= xPos and x_mario+ mario_width <= xPos +width:
-		if y_mario + mario_height <= yPos:
-			y_mario = yPos- mario_height
-			isJump = False
-
-		elif y_mario <= yPos + height and y_mario>= yPos:
-			y_mario = yPos+height
-			x_mario= xPos - mario_width
-	
+			elif y_mario <= yPos + height and y_mario>= yPos:
+				y_mario = yPos+height
+				x_mario= xPos - mario_width
 
 class Elements():
 	def __init__(self, x_pos, y_pos, pngImage):
@@ -192,13 +192,13 @@ isJump = False
 right = False
 left = False
 temprf = 0
-jumpPoints = [11, 14]
+jumpPoints = [11, 14.2]
 jumpHeight = jumpPoints[power]
 mario_width, mario_height = sr_mario1.get_rect().size
 
 #all the elements
 starbox1 = Elements(1280+135, 280, star_box)
-wall3block_e = Elements(1280+135+150, 280, wall3block)
+wall3block_e = Elements(1280+135+430, 280, wall3block)
 #the game loop 
 while running:
 	for event in pygame.event.get():
@@ -230,8 +230,9 @@ while running:
 		starbox1.x_pos += bg_add
 		wall3block_e.x_pos += bg_add
 
-	collision(starbox1.x_pos, starbox1.y_pos, star_box)
+	
 	collision(wall3block_e.x_pos, wall3block_e.y_pos, wall3block)
+	collision(starbox1.x_pos, starbox1.y_pos, star_box)
 	bg_loop()
 	show()
 
