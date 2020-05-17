@@ -20,17 +20,33 @@ sl_mario2 = pygame.image.load("Images/New Marios/flipsmallmario2.png")
 sl_mario3 = pygame.image.load("Images/New Marios/flipsmallmario3.png")
 sl_mario4 = pygame.image.load("Images/New Marios/flipsmallmario4.png")
 sl_jump = pygame.image.load("Images/New Marios/flipsmalljump.png")
-walking_sleft = [sl_mario1, sl_mario2, sl_mario3, sl_mario4]
+walking_sleft = [sl_mario1, sl_mario2, sl_mario3, sl_mario4, sl_jump]
+
+gl_mario1 = pygame.image.load("Images/New Marios/flipgreenmario1.png")
+gl_mario2 = pygame.image.load("Images/New Marios/flipgreenmario2.png")
+gl_mario3 = pygame.image.load("Images/New Marios/flipgreenmario3.png")
+gl_mario4 = pygame.image.load("Images/New Marios/flipgreenmario4.png")
+gl_jump = pygame.image.load("Images/New Marios/flipgreenmariojump.png")
+walking_gleft = [gl_mario1, gl_mario2, gl_mario3, gl_mario4, gl_jump]
+walking_left = [walking_sleft, walking_gleft]
 
 sr_mario1 = pygame.image.load("Images/New Marios/smallmario1.png")
 sr_mario2 = pygame.image.load("Images/New Marios/smallmario2.png")
 sr_mario3 = pygame.image.load("Images/New Marios/smallmario3.png")
 sr_mario4 = pygame.image.load("Images/New Marios/smallmario4.png")
 sr_jump = pygame.image.load("Images/New Marios/smalljump.png")
-walking_sright = [sr_mario1, sr_mario2, sr_mario3, sr_mario4]
+walking_sright = [sr_mario1, sr_mario2, sr_mario3, sr_mario4, sr_jump]
 
+gr_mario1 = pygame.image.load("Images/New Marios/greenmario1.png")
+gr_mario2 = pygame.image.load("Images/New Marios/greenmario2.png")
+gr_mario3 = pygame.image.load("Images/New Marios/greenmario3.png")
+gr_mario4 = pygame.image.load("Images/New Marios/greenmario4.png")
+gr_jump = pygame.image.load("Images/New Marios/greenmariojump.png")
+walking_gright = [gr_mario1, gr_mario2,gr_mario3, gr_mario4, gr_jump]
+
+walking_right = [walking_sright, walking_gright]
 star_box = pygame.image.load("Images/Star box.png")
-
+power = 1
 #all the funtions
 def jump():
 	global x_mario, y_mario, jumpPoints, isJump, d
@@ -60,28 +76,28 @@ def mario_walking():
 		jump()
 		if right == False and left == False:
 			if temprf == False:
-				screen.blit(sr_jump, (x_mario, y_mario))
+				screen.blit(walking_right[power][4], (x_mario, y_mario))
 			if temprf == True:
-				screen.blit(sl_jump, (x_mario, y_mario))
+				screen.blit(walking_left[power][4], (x_mario, y_mario))
 		if right:
-			screen.blit(sr_jump, (x_mario,y_mario))
+			screen.blit(walking_right[power][4], (x_mario,y_mario))
 		if left:
-			screen.blit(sl_jump, (x_mario,y_mario))
+			screen.blit(walking_left[power][4], (x_mario,y_mario))
 	if isJump == False:
 		if right == False and left == False:
 			if temprf == False:
-				screen.blit(sr_mario1, (x_mario, y_mario))
+				screen.blit(walking_right[power][0], (x_mario, y_mario))
 			if temprf == True:
-				screen.blit(sl_mario1, (x_mario, y_mario))
+				screen.blit(walking_left[power][0], (x_mario, y_mario))
 		if right:
 			if  bg_add !=0 or mario_add!=0:
-				screen.blit(walking_sright[points/5], (x_mario,y_mario))
+				screen.blit(walking_right[power][points/5], (x_mario,y_mario))
 				points +=1
 				if points >=  20:
 					points = 0
 		if left:
 			if bg_add !=0 or mario_add!=0:
-				screen.blit(walking_sleft[points/5], (x_mario,y_mario))
+				screen.blit(walking_left[power][points/5], (x_mario,y_mario))
 				points +=1
 				if points >=  20:
 					points = 0
@@ -126,10 +142,8 @@ def show():
 def collision(xPos, yPos, img):
 	global isJump
 	global x_mario,y_mario
-	print(isJump, x_mario, xPos)
-	
-
 	width,height = img.get_rect().size
+
 	if y_mario + mario_height <=yPos:
 		if x_mario < xPos or x_mario+ mario_width > xPos +width:
 			isJump = True
@@ -175,7 +189,7 @@ isJump = False
 right = False
 left = False
 temprf = 0
-jumpPoints = 12
+jumpPoints = 11
 jumpHeight = jumpPoints
 mario_width, mario_height = sr_mario1.get_rect().size
 
