@@ -45,7 +45,8 @@ gr_jump = pygame.image.load("Images/New Marios/greenmariojump.png")
 walking_gright = [gr_mario1, gr_mario2,gr_mario3, gr_mario4, gr_jump]
 
 walking_right = [walking_sright, walking_gright]
-star_box = pygame.image.load("Images/Star box.png")
+star_box1 = pygame.image.load("Images/Star box.png")
+star_box2 = pygame.image.load("Images/Star box.png")
 wall3block = pygame.image.load("Images/3wallblock.png")
 
 power = 1
@@ -139,7 +140,9 @@ def show():
 	screen.blit(bg1, (x_bg3, 0))
 	mario_walking()
 	blitByXpos(starbox1.pngImage, starbox1.x_pos, starbox1.y_pos)
+	blitByXpos(starbox2.pngImage, starbox2.x_pos, starbox2.y_pos)
 	blitByXpos(wall3block_e.pngImage, wall3block_e.x_pos, wall3block_e.y_pos)
+
 	pygame.display.update()
 
 def collision(xPos, yPos, img):
@@ -157,7 +160,7 @@ def collision(xPos, yPos, img):
 				isJump = False
 			elif y_mario <= yPos+height and y_mario>= yPos:
 				y_mario = yPos+height
-				x_mario = xPos
+				#x_mario = xPos
 
 		if x_mario + mario_width >= xPos and x_mario+ mario_width <= xPos +width:
 			if y_mario + mario_height <= yPos:
@@ -166,7 +169,7 @@ def collision(xPos, yPos, img):
 
 			elif y_mario <= yPos + height and y_mario>= yPos:
 				y_mario = yPos+height
-				x_mario= xPos - mario_width
+				#x_mario= xPos - mario_width
 
 class Elements():
 	def __init__(self, x_pos, y_pos, pngImage):
@@ -192,12 +195,13 @@ isJump = False
 right = False
 left = False
 temprf = 0
-jumpPoints = [11, 14.2]
+jumpPoints = [11.5, 14.2]
 jumpHeight = jumpPoints[power]
 mario_width, mario_height = sr_mario1.get_rect().size
 
 #all the elements
-starbox1 = Elements(1280+135, 280, star_box)
+starbox1 = Elements(1280+135, 280, star_box1)
+starbox2 = Elements(1280+135+430+ 50, 80, star_box2)
 wall3block_e = Elements(1280+135+430, 280, wall3block)
 #the game loop 
 while running:
@@ -228,14 +232,16 @@ while running:
 				left= False
 	if x_mario >= 960 or x_mario <= 180:
 		starbox1.x_pos += bg_add
+		starbox2.x_pos += bg_add
 		wall3block_e.x_pos += bg_add
 
 	
 	collision(wall3block_e.x_pos, wall3block_e.y_pos, wall3block)
-	collision(starbox1.x_pos, starbox1.y_pos, star_box)
+	collision(starbox1.x_pos, starbox1.y_pos, star_box1)
+	collision(starbox2.x_pos, starbox2.y_pos, star_box2)
 	bg_loop()
 	show()
-
+	print(starbox2.x_pos)
 
 
 
