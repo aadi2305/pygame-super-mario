@@ -46,21 +46,23 @@ walking_gright = [gr_mario1, gr_mario2,gr_mario3, gr_mario4, gr_jump]
 
 walking_right = [walking_sright, walking_gright]
 star_box = pygame.image.load("Images/Star box.png")
+wall3block = pygame.image.load("Images/3wallblock.png")
+
 power = 1
 #all the funtions
 def jump():
 	global x_mario, y_mario, jumpPoints, isJump, d
 	if isJump == True:
-		if jumpPoints >=0:
+		if jumpPoints[power] >=0:
 			neg = 1
-		elif jumpPoints <0:
+		elif jumpPoints[power] <0:
 			neg = -1
-		y_mario = y_mario - ((jumpPoints**2)*0.25*neg)
+		y_mario = y_mario - ((jumpPoints[power]**2)*0.25*neg)
 		if y_mario > 425:
 			y_mario = 425
-		jumpPoints-=1
-		if jumpPoints < -jumpHeight:
-			jumpPoints = jumpHeight
+		jumpPoints[power]-=1
+		if jumpPoints[power] < -jumpHeight:
+			jumpPoints[power] = jumpHeight
 			isJump = False
 			y_mario = 425
 
@@ -112,7 +114,7 @@ def bg_loop():
 	global x_bg1
 	global x_bg2 , x_bg3
 	if x_mario >= 960 or x_mario <= 180:
-		starbox1.x_pos += bg_add
+		
 		x_bg1 = x_bg1 + bg_add
 		x_bg2 = x_bg2 + bg_add
 		x_bg3 = x_bg3 + bg_add
@@ -137,6 +139,7 @@ def show():
 	screen.blit(bg1, (x_bg3, 0))
 	mario_walking()
 	blitByXpos(starbox1.pngImage, starbox1.x_pos, starbox1.y_pos)
+	blitByXpos(wall3block_e.pngImage, wall3block_e.x_pos, wall3block_e.y_pos)
 	pygame.display.update()
 
 def collision(xPos, yPos, img):
@@ -189,13 +192,13 @@ isJump = False
 right = False
 left = False
 temprf = 0
-jumpPoints = 11
-jumpHeight = jumpPoints
+jumpPoints = [11, 14]
+jumpHeight = jumpPoints[power]
 mario_width, mario_height = sr_mario1.get_rect().size
 
 #all the elements
 starbox1 = Elements(1280+135, 280, star_box)
-
+wall3block_e = Elements(1280+135+150, 280, wall3block)
 #the game loop 
 while running:
 	for event in pygame.event.get():
@@ -223,7 +226,12 @@ while running:
 				mario_add = 0
 				right = False
 				left= False
+	if x_mario >= 960 or x_mario <= 180:
+		starbox1.x_pos += bg_add
+		wall3block_e.x_pos += bg_add
+
 	collision(starbox1.x_pos, starbox1.y_pos, star_box)
+	collision(wall3block_e.x_pos, wall3block_e.y_pos, wall3block)
 	bg_loop()
 	show()
 
